@@ -15,8 +15,8 @@ Among these features, it also has:
 
 ## Installation instructions
 
-1. git clone https://github.com/jeffhc/epsas.git
-2. npm install
-3. Create a file config/Config.js that exports an object with a secret
+1. `git clone https://github.com/jeffhc/epsas.git`
+2. `npm install`
+3. Create a file *config/Config.js* that exports an object with a secret
 4. `npm start` runs development mode, `npm run production` runs production mode (no stack traces in render functions)
 
