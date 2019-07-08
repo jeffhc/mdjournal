@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  .row
+    .col-md-6
+      //- h1.display-4.m-b-2 Login
+
+      // register form
+      form(method='POST' action='/api/login')
+        div.form-group
+          //- label(for='username') Username:
+          input#username.form-control(type='text', placeholder='Username' name='username')
+        div.form-group
+          //- label(for='password') Confirm Password:
+          input#password.form-control(type='password' placeholder='Password' name='password')
+        button.btn.btn-primary(type='submit') Sign up
