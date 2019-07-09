@@ -3,6 +3,8 @@ html
   head
     title= title
     
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
   
@@ -39,6 +41,8 @@ html
           else
             a.nav-link(href='/api/login', tabindex='-1', aria-disabled='true') Login
     
+    script(src='/javascripts/jquery-3.4.1.min.js')
+
     #content
       h1= title
       -if(messages)
@@ -48,5 +52,4 @@ html
               div.flash #{message}
       block content
 
-    script(src='/javascripts/jquery-3.4.1.min.js')
     script(src='/javascripts/bootstrap.bundle.min.js')

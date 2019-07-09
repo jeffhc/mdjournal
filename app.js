@@ -4,7 +4,7 @@ var path = require('path');
 var logger = require('morgan');
 var cors = require('cors');
 var mongoose = require('mongoose');
-var cookieParser = require('cookie-parser');
+// var cookieParser = require('cookie-parser');
 var bodyParser = require("body-parser");
 const session = require('express-session');
 var config = require('./config/Config');
@@ -33,9 +33,10 @@ app.use(logger('dev'));
 app.use(express.json());
 // app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: config.secret, resave: false, saveUninitialized: false })); // cookie: { maxAge: 60000 }, 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser(config.secret));
-app.use(session({ secret: config.secret, cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
+// app.use(cookieParser(config.secret));
+
 app.use(flash());
 
 app.use(passport.initialize());
