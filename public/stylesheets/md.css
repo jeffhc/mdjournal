@@ -1,0 +1,59 @@
+/* .CodeMirror {
+  color:#ccc;
+  border-color:#333;
+  background-color:inherit
+}
+
+.cm-s-easymde .CodeMirror-cursor {
+  border-color:#ccc
+} */
+
+.explorer {
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-sizing: border-box;
+  display: block;
+}
+
+table.explorer-files td {
+  width: 100%;
+  padding: 8px 4px;
+  line-height: 20px;
+  border-top: 1px solid #eaecef;
+}
+
+.explorer-item {
+  display: table-row;
+  line-height: 1.25;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+  font-size: 14px;
+}
+
+.explorer-icon {
+  width:  5% !important;
+  padding-right: 2px !important;
+  padding-left: 16px !important;
+  color: rgba(3,47,98,.55);
+}
+
+.content {
+  max-width: 180px;
+  padding-left: 14px;
+}
+
+.age {
+  width: 125px;
+  padding-right: 16px !important;
+  color: #6a737d;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.markdown {}
+
+.create-form {
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+}

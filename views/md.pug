@@ -1,0 +1,49 @@
+extends layout
+
+block content
+  link(rel='stylesheet', href='/stylesheets/md.css')
+  nav
+    ol.breadcrumb
+      - if(ancestors && ancestors.length)
+        - for(var item of [...ancestors, current])
+          li.breadcrumb-item
+            a(href=`/md/${item.id}`)= item.name
+      - else
+        li.breadcrumb-item
+          a(href='#') root
+  - if(current.type === 'root' || current.type === 'folder')
+    form.create-form.form-inline.mb-3(action=`/md/${current._id}/new`, method='POST')
+      div.form-group.mb-2
+        input.form-control.form-control-sm(type='text', name='name', value='', placeholder='Name')
+      div.form-check.mx-sm-3.mb-2
+        input.form-check-input.form-control-sm(type="radio", id="markdown", name="type", value="markdown")
+        label.form-check-label(for="markdown") Markdown File
+      div.form-check.mx-sm-3.mb-2
+        input.form-check-input.form-control-sm(type="radio", id="folder", name="type", value="folder")
+        label.form-check-label(for="male") Folder
+      input.btn.btn-sm.btn-primary(type='submit', value='Submit')
+  - if(current.type === 'root' || current.type === 'folder')
+    div.explorer.mb-3
+      div.explorer-header
+      table.explorer-files
+        - for(var child of children)
+          tr.explorer-item
+            td.explorer-icon
+              - if(child.type === 'folder' || child.type === 'root')
+                svg.octicon.octicon-file-directory(aria-label='directory' viewbox='0 0 14 16' version='1.1' width='14' height='16' role='img')
+                  path(fill-rule='evenodd' d='M13 4H7V3c0-.66-.31-1-1-1H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zM6 4H1V3h5v1z')
+              - else
+                svg.octicon.octicon-file(aria-label='file', viewBox='0 0 12 16', version='1.1', width='12', height='16', role='img')
+                  path(fill-rule='evenodd', d='M6 5H2V4h4v1zM2 8h7V7H2v1zm0 2h7V9H2v1zm0 2h7v-1H2v1zm10-7.5V14c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V2c0-.55.45-1 1-1h7.5L12 4.5zM11 5L8 2H1v12h10V5z')
+            td.content
+              a(href=`/md/${child._id}`)= child.name
+            td.message
+            td.age
+              span= child.last_updated.toDateString() + ', ' + child.last_updated.toLocaleTimeString()
+  - else
+    div.markdown
+      textarea(id='md-textarea')
+      script(src='/javascripts/easymde.min.js')
+      script(type='text/javascript').
+        const current = !{JSON.stringify(current)};
+      script(src='/javascripts/md.js')

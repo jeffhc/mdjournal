@@ -14,8 +14,11 @@ router.get('/', function(req, res, next) {
   });
 });
 
-/* API */
-router.use('/api', require('./api'));
+/* User */
+router.use('/user', require('./user.js'));
+
+/* Markdown */
+router.use('/md', require('./md'));
 
 /* Test */
 router.use('/test', require('./test'));

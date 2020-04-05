@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const config = require('../config/Config');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const Leaf = require('./Leaf');
 
 const { Schema } = mongoose;
+const ObjectId = Schema.ObjectId;
 
 const UserSchema = new Schema({
   username: { type: String },
@@ -11,7 +13,9 @@ const UserSchema = new Schema({
   hash: String,
   salt: String,
   
-  roleId: Number, // 0 is user, 1 is photographer, 2 is admin,
+  roleId: Number, // 0 is user, 1 is admin,
+
+  rootLeaf: ObjectId,
 
 });
 
@@ -64,7 +68,18 @@ UserSchema.methods.toAuthJSON = function() {
     _id: this._id,
     username: this.username,
     token: this.generateJWT(),
+    rootLeaf: this.rootLeaf,
   };
 };
+
+UserSchema.methods.generateRootLeaf = function(onResult) {
+  let rootLeaf = new Leaf({ name: 'root', type: 'root' });
+  rootLeaf.save((err, doc) => {
+    if(err) {console.log(err);}
+    this.rootLeaf = doc._id;
+    onResult(this.rootLeaf);
+  });
+}
+
 
 module.exports = mongoose.model('User', UserSchema);

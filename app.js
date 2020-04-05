@@ -17,8 +17,13 @@ var User = require('./models/User');
 mongoose.promise = global.Promise;
 
 //Configure Mongoose
-mongoose.connect('mongodb://localhost/epsas',
-  { useNewUrlParser: true }
+mongoose.connect(`mongodb://localhost/${config.MONGODB_DATABASE}`,
+  { 
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+    useUnifiedTopology: true
+  }
 );
 // mongoose.set('debug', true);
 
@@ -29,13 +34,12 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(cors());
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(express.json());
 // app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: config.secret, resave: false, saveUninitialized: false })); // cookie: { maxAge: 60000 }, 
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(cookieParser(config.secret));
 
 app.use(flash());
 
@@ -60,7 +64,8 @@ function userView(req, res, next) {
   next();
 }
 function messages(req, res, next) {
-  res.locals.messages = [...req.flash('success'), ...req.flash('info'), ...req.flash('error')];
+  // res.locals.messages = [...req.flash('success'), ...req.flash('info'), ...req.flash('error')];
+  res.locals.messages = {'success': req.flash('success'), 'info': req.flash('info'), 'error': req.flash('error')};
   next();
 }
 app.use(userView);
