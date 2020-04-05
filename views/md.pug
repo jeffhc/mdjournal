@@ -13,15 +13,18 @@ block content
           a(href='#') root
   - if(current.type === 'root' || current.type === 'folder')
     form.create-form.form-inline.mb-3(action=`/md/${current._id}/new`, method='POST')
-      div.form-group.mb-2
-        input.form-control.form-control-sm(type='text', name='name', value='', placeholder='Name')
-      div.form-check.mx-sm-3.mb-2
-        input.form-check-input.form-control-sm(type="radio", id="markdown", name="type", value="markdown")
-        label.form-check-label(for="markdown") Markdown File
-      div.form-check.mx-sm-3.mb-2
-        input.form-check-input.form-control-sm(type="radio", id="folder", name="type", value="folder")
-        label.form-check-label(for="male") Folder
-      input.btn.btn-sm.btn-primary(type='submit', value='Submit')
+      .input-group.input-group-sm
+        input.form-control(type='text', name='name', value='', placeholder='Name')
+        .input-group-append
+          .input-group-text
+            input.form-check-input(type="radio", id="markdown", name="type", value="markdown")
+            label.form-check-label(for="markdown") Markdown File
+        .input-group-append
+          .input-group-text
+            input.form-check-input(type="radio", id="folder", name="type", value="folder")
+            label.form-check-label(for="folder") Folder
+        .input-group-append
+          input.btn.btn-sm.btn-primary(type='submit', value='Submit')
   - if(current.type === 'root' || current.type === 'folder')
     div.explorer.mb-3
       div.explorer-header

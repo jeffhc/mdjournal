@@ -8,6 +8,10 @@
   border-color:#ccc
 } */
 
+/*
+    File explorer stuff
+*/
+
 .explorer {
   width: 100%;
   background-color: #fff;
@@ -41,6 +45,7 @@ table.explorer-files td {
 .content {
   max-width: 180px;
   padding-left: 14px;
+  font-size: 16px;
 }
 
 .age {
@@ -51,9 +56,22 @@ table.explorer-files td {
   white-space: nowrap;
 }
 
-.markdown {}
+/*
+    Markdown stuff
+*/
+
+/* .markdown {} */
+
+/*
+    Create form stuff
+*/
 
 .create-form {
-  border: 1px solid #d1d5da;
-  border-radius: 3px;
+  /* border: 1px solid #d1d5da;
+  border-radius: 3px; */
+  text-align:right;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-end;
+  font-size: 8px !important;
 }
