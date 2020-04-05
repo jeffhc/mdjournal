@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  .row
+    .col-md-6
+      h2.mb-4 Create User
+
+      // create form
+      form(method='POST' action='/user/create')
+        div.form-group
+          input#username.form-control(type='text', placeholder='Username' name='username')
+        div.form-group
+          input#password.form-control(type='password' placeholder='Password' name='password')
+        div.form-group
+          select#exampleFormControlSelect1.form-control(name='roleId')
+            option(value=0) User
+            option(value=1) Admin
+        button.btn.btn-primary(type='submit') Create

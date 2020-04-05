@@ -47,11 +47,16 @@ router.get('/logout', (req, res, next) => {
   res.redirect('/');
 })
 
-//POST new user route
-router.post('/create', auth.required, (req, res, next) => {
-  const { body: { user } } = req;
+// GET new user route
+router.get('/create', auth.admin, (req, res, next) => {
+  res.render('create_user')
+});
 
-  if(!user.username) {
+// POST new user route
+router.post('/create', auth.admin, (req, res, next) => {
+  const { body: { username, password, roleId } } = req;
+
+  if(!username) {
     return res.status(422).json({
       errors: {
         username: 'is required',
@@ -59,7 +64,7 @@ router.post('/create', auth.required, (req, res, next) => {
     });
   }
 
-  if(!user.password) {
+  if(!password) {
     return res.status(422).json({
       errors: {
         password: 'is required',
@@ -67,16 +72,31 @@ router.post('/create', auth.required, (req, res, next) => {
     });
   }
 
-  const finalUser = new User(user);
+  if(!roleId) {
+    return res.status(422).json({
+      errors: {
+        roleId: 'is required',
+      },
+    });
+  }
 
-  finalUser.generateHash(user.password);
+  const finalUser = new User({
+    username,
+    password,
+    roleId
+  });
+
+  finalUser.generateHash(password);
   finalUser.generateRootLeaf((rootLeafID) => {
-    return finalUser.save()
-      .then(() => res.json({ user: finalUser.toAuthJSON() }));
+    return finalUser.save().then(() => {
+      // res.json({ user: finalUser.toAuthJSON() })
+      req.flash('success', 'Successfully created user!');
+      res.redirect('/');
+    });
   });
 });
 
-//GET current route (required, only authenticated users have access)
+// GET current route (required, only authenticated users have access)
 router.get('/current', auth.required, (req, res, next) => {
   const { payload: { id } } = req;
 

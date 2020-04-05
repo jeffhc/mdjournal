@@ -13,7 +13,7 @@ html
   body
     
     nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
-      a.navbar-brand(href='#') MDJournal
+      a.navbar-brand(href='/') MDJournal
       button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
         span.navbar-toggler-icon
       #navbarSupportedContent.collapse.navbar-collapse
@@ -42,6 +42,9 @@ html
             a.nav-link(href='/user/logout', tabindex='-1', aria-disabled='true') Logout
           else
             a.nav-link(href='/user/login', tabindex='-1', aria-disabled='true') Login
+        - if(user && user.roleId === 1)
+          .nav-item
+            a.nav-link(href='/user/create') Create user
     
     script(src='/javascripts/jquery-3.4.1.min.js')
 

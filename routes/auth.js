@@ -32,11 +32,20 @@ const required = function(req, res, next) {
   }
 }
 
+const admin = function(req, res, next) {
+  if(!req.user || req.user.roleId !== 1) {
+    return next(createError(401));
+  } else {
+    next();
+  }
+}
+
 /*
   Authentication methods for requests
 */
 const auth = {
-  required
+  required,
+  admin
 };
 
 module.exports = auth;

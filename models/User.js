@@ -13,7 +13,7 @@ const UserSchema = new Schema({
   hash: String,
   salt: String,
   
-  roleId: Number, // 0 is user, 1 is admin,
+  roleId: { type: Number, default: 0 }, // 0 is user, 1 is admin,
 
   rootLeaf: ObjectId,
 
