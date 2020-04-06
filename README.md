@@ -19,9 +19,10 @@ MD Journal uses the Markdown language for writing into documents, which is extre
 
 ### Installation instructions
 
-1. `git clone https://github.com/jeffhc/mdjournal.git`
-2. `npm install`
-3. Create a file *config/Config.js* that exports an object with a `secret` and a `MONGODB_DATABASE`.
-4. `npm start` runs development mode, `npm run production` runs production mode (no stack traces in render functions)
+1. Install Node.js@^12.0 and npm@^6.0
+2. `git clone https://github.com/jeffhc/mdjournal.git`
+3. `npm install`
+4. Create a file *config/Config.js* that exports an object with a `secret` and a `MONGODB_DATABASE`.
+5. `npm start` runs development mode, `npm run production` runs production mode (no stack traces in render functions)
 
 > Markdown journal is based off of [epsas](https://github.com/jeffhc/epsas), or the Express Passport Session Authentication Skeleton.
