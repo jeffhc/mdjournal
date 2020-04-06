@@ -1,22 +1,27 @@
-# `epsas` | Express Passport Session Authentication Skeleton
+# `MDJournal` | Markdown Journal
 
-This repository contains an Express 4.x example that implements the
-default Passport.js session authentication, using local-passport.
+---
 
-It includes:
-* Basic login/logout pages
-* A simple User model connected to MongoDB
-* User creation
-* A test authentication protected route
+Markdown Journal is a simple, fast, cloud-based note taking app for all purposes.
+MD Journal uses the Markdown language for writing into documents, which is extremely simple and allows for a lot of flexibility. It's very similar to just typing text, with some added functionality. A quick tutorial for Markdown can be found [here]((https://www.markdownguide.org/basic-syntax/)). A quicker handy reference can be found [here](https://simplemde.com/markdown-guide).
 
-Among these features, it also has:
-* Flash messages
-* Bootstrap 4.3
 
-## Installation instructions
+### Features
+- Create and edit Markdown/text files, which are automatically saved to the cloud.
+- Organize files into folders.
+- Auto-save functionality: every edit you make is saved into the cloud, kinda like Google Docs.
 
-1. `git clone https://github.com/jeffhc/epsas.git`
+### Features to be implemented
+- Delete files and folders. 
+- Move around files and folders. (Drag and drop functionality.)
+- Sorting files and folders by date and name in the explorer.
+- Search functionality.
+
+### Installation instructions
+
+1. `git clone https://github.com/jeffhc/mdjournal.git`
 2. `npm install`
-3. Create a file *config/Config.js* that exports an object with a secret
+3. Create a file *config/Config.js* that exports an object with a `secret` and a `MONGODB_DATABASE`.
 4. `npm start` runs development mode, `npm run production` runs production mode (no stack traces in render functions)
 
+> Markdown journal is based off of [epsas](https://github.com/jeffhc/epsas), or the Express Passport Session Authentication Skeleton.
