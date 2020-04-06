@@ -53,13 +53,21 @@ html
       -if(messages)
         if(messages.success)
           for message in messages.success
-            div.flash.alert.alert-success #{message}
+            div.flash.alert.alert-success.hidden #{message}
         if(messages.info)
           for message in messages.info
-            div.flash.alert.alert-info #{message}
+            div.flash.alert.alert-info.hidden #{message}
         if(messages.error)
           for message in messages.error
-            div.flash.alert.alert-danger #{message}
+            div.flash.alert.alert-danger.hidden #{message}
       block content
 
     script(src='/javascripts/bootstrap.bundle.min.js')
+    script(type='text/javascript').
+      $(function() {
+        $('.hidden').slideDown("normal", function() {});
+
+        setTimeout(function() {
+            $('.flash').fadeOut('normal');
+        }, 3000); // <-- time in milliseconds
+      });

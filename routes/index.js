@@ -1,6 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var auth = require('./auth');
+var fs = require('fs');
+var path = require("path");
+let introduction = '';
+
+fs.readFile(path.resolve(__dirname, "../config/Introduction.md"), (err, data) => {
+  if (err) throw err;
+  introduction = data;
+});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -9,8 +17,9 @@ router.get('/', function(req, res, next) {
     content = 'Welcome home, ' + req.user.username + '!'
   }
   res.render('index', { 
-    title: 'Home Page',
-    content
+    title: 'Markdown Journal v.1',
+    content,
+    introduction
   });
 });
 
