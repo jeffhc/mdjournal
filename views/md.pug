@@ -2,6 +2,8 @@ extends layout
 
 block content
   link(rel='stylesheet', href='/stylesheets/md.css')
+  script(type='text/javascript').
+      const current = !{JSON.stringify(current)};
   nav
     ol.breadcrumb
       - if(ancestors && ancestors.length)
@@ -12,29 +14,36 @@ block content
         li.breadcrumb-item
           a(href='#') root
   - if(current.type === 'root' || current.type === 'folder')
-    form.create-form.form-inline.mb-3(action=`/md/${current._id}/new`, method='POST')
-      .input-group.input-group-sm
-        input.form-control(type='text', name='name', value='', placeholder='Name')
-        //- .input-group-append
-        //-   .input-group-text
-        //-     input.form-check-input(type="radio", id="markdown", name="type", value="markdown")
-        //-     label.form-check-label(for="markdown") Markdown File
-        //- .input-group-append
-        //-   .input-group-text
-        //-     input.form-check-input(type="radio", id="folder", name="type", value="folder")
-        //-     label.form-check-label(for="folder") Folder
-        .input-group-append
-          select.custom-select.custom-select-sm(name='type')
-            option(value='markdown', selected=true) Markdown File
-            option(value='folder') Folder
-        .input-group-append
-          input.btn.btn-sm.btn-primary(type='submit', value='Create')
+    .toolbar
+      //- button.btn.btn-primary.btn-sm.mb-3(id='select_action') Select
+      .btn-group.btn-group-sm.mb-3(role='group', style='display:none;', id='toolbar_actions')
+        button.btn.btn-danger(id='select_all_action') Select All
+        button.btn.btn-danger(id='deselect_all_action', style='display:none;') Deselect All
+        button.btn.btn-secondary(id='move_action') Move
+        button.btn.btn-secondary(id='delete_action') Delete
+      form.create-form.form-inline.mb-3(action=`/md/${current._id}/new`, method='POST')
+        .input-group.input-group-sm
+          input.form-control(type='text', name='name', value='', placeholder='Name')
+          //- .input-group-append
+          //-   .input-group-text
+          //-     input.form-check-input(type="radio", id="markdown", name="type", value="markdown")
+          //-     label.form-check-label(for="markdown") Markdown File
+          //- .input-group-append
+          //-   .input-group-text
+          //-     input.form-check-input(type="radio", id="folder", name="type", value="folder")
+          //-     label.form-check-label(for="folder") Folder
+          .input-group-append
+            select.custom-select.custom-select-sm(name='type')
+              option(value='markdown', selected=true) Markdown File
+              option(value='folder') Folder
+          .input-group-append
+            input.btn.btn-sm.btn-primary(type='submit', value='Create')
   - if(current.type === 'root' || current.type === 'folder')
     div.explorer.mb-3
       div.explorer-header
       table.explorer-files
         - for(var child of children)
-          tr.explorer-item
+          tr.explorer-item(data-id=child._id)
             td.explorer-icon
               - if(child.type === 'folder' || child.type === 'root')
                 svg.octicon.octicon-file-directory(aria-label='directory' viewbox='0 0 14 16' version='1.1' width='14' height='16' role='img')
@@ -47,10 +56,9 @@ block content
             td.message
             td.age
               span= child.last_updated.toDateString() + ', ' + child.last_updated.toLocaleTimeString()
+    script(src='/javascripts/file_explorer.js')
   - else
     div.markdown
       textarea(id='md-textarea')
-      script(src='/javascripts/easymde.min.js')
-      script(type='text/javascript').
-        const current = !{JSON.stringify(current)};
-      script(src='/javascripts/md.js')
+    script(src='/javascripts/easymde.min.js')
+    script(src='/javascripts/md.js')

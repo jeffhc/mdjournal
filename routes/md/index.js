@@ -112,7 +112,7 @@ router.post('/:id/delete', auth.required, (req, res, next) => {
 });
 
 // POST: Move markdown file or folder.
-router.post('/:id/delete', auth.required, (req, res, next) => {
+router.post('/:id/move', auth.required, (req, res, next) => {
   let isRoot = (req.params.id == undefined || req.params.id === 'root');
 
   Leaf.findOne({ _id: isRoot ? req.user.rootLeaf : req.params.id }, (err, current_doc) => {

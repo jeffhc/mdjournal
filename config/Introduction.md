@@ -20,3 +20,12 @@ MD Journal uses the Markdown language for writing into documents, which is extre
 - Move around files and folders. (Drag and drop functionality.)
 - Sorting files and folders by date and name in the explorer.
 - Search functionality.
+
+- upload
+- Preview default
+- Selection 
+- Public/private (404) (view only)
+- Shared with others (404)
+- Rename
+- Copy/paste?
+- Autosave show last refresshed on open

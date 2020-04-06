@@ -57,6 +57,25 @@ table.explorer-files td {
 }
 
 /*
+    Toolbar stuff
+*/
+
+.toolbar {  
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.selected {
+  background-color: #e8f0fe;
+  color: #1967d2;
+}
+
+
+
+/*
     Markdown stuff
 */
 
@@ -74,4 +93,5 @@ table.explorer-files td {
   flex-direction: column;
   align-content: flex-end;
   font-size: 8px !important;
+  margin-left: auto;
 }
