@@ -44,36 +44,7 @@ router.get('/folder_tree', auth.required, (req, res, next) => {
       let tree = treejs.getParsedTreeFromPaths(pathsArray, pathNameDictionary);
       res.send(tree['nodes']);
       res.end();
-
-      // From https://stackoverflow.com/questions/57344694/create-a-tree-from-a-list-of-strings-containing-paths-of-files-javascript
-      // let result = [];
-      // let level = {result};
-
-      // docs.forEach((doc) => {
-      //   if(doc.type === 'folder' || doc.type === 'root') {
-      //     let ancestor_ids = doc.ancestors.map(function(ancestor) { return ancestor.id });
-      //     [...ancestor_ids, doc._id].reduce((r, id, i, a) => {
-      //       console.log(level);
-
-      //       if(!r[id]) {
-      //         r[id] = {result: [], tags_count: 0};
-      //         r.result.push({
-      //           id, name: doc.name, text: doc.name, children: r[id].result, nodes: r[id].result,
-      //           icon: "fa fa-folder",
-      //           selectedIcon: "fa fa-folder",
-      //           color: "#000000",
-      //           backColor: "#FFFFFF",
-      //           tags_count: r.result.length,
-      //         });
-      //       }
-            
-      //       return r[id];
-      //     }, level);
-      //   }
-      // })
-
-      // res.send(result);
-      // res.end();
+      
     } else {
       res.json({'error': true});
       res.end();
