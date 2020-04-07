@@ -73,7 +73,13 @@ table.explorer-files td {
   color: #1967d2;
 }
 
+#select_all_action {
+  min-width: 7.8em;
+}
 
+#deselect_all_action {
+  min-width: 7.8em;
+}
 
 /*
     Markdown stuff

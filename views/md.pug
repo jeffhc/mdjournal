@@ -2,6 +2,7 @@ extends layout
 
 block content
   link(rel='stylesheet', href='/stylesheets/md.css')
+  link(rel='stylesheet', href='/stylesheets/bootstrap-treeview.min.css')
   script(type='text/javascript').
       const current = !{JSON.stringify(current)};
   nav
@@ -16,9 +17,9 @@ block content
   - if(current.type === 'root' || current.type === 'folder')
     .toolbar
       //- button.btn.btn-primary.btn-sm.mb-3(id='select_action') Select
-      .btn-group.btn-group-sm.mb-3(role='group', style='display:none;', id='toolbar_actions')
-        button.btn.btn-danger(id='select_all_action') Select All
-        button.btn.btn-danger(id='deselect_all_action', style='display:none;') Deselect All
+      .btn-group.btn-group-sm.mb-3(role='group', id='toolbar_actions')
+        button.btn.btn-info(id='select_all_action') Select All
+        button.btn.btn-info(id='deselect_all_action', style='display:none;') Deselect All
         button.btn.btn-secondary(id='move_action') Move
         button.btn.btn-secondary(id='delete_action') Delete
       form.create-form.form-inline.mb-3(action=`/md/${current._id}/new`, method='POST')
@@ -38,6 +39,18 @@ block content
               option(value='folder') Folder
           .input-group-append
             input.btn.btn-sm.btn-primary(type='submit', value='Create')
+    .modal(tabindex='-1', role='dialog', id='main-modal')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            h5.modal-title(id='main-modal-title') Modal title
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+          .modal-body(id='main-modal-body')
+            p Modal body text goes here.
+          .modal-footer
+            button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+            button.btn.btn-primary(type='button', id='main-modal-submit') Ok
   - if(current.type === 'root' || current.type === 'folder')
     div.explorer.mb-3
       div.explorer-header
@@ -57,6 +70,7 @@ block content
             td.age
               span= child.last_updated.toDateString() + ', ' + child.last_updated.toLocaleTimeString()
     script(src='/javascripts/file_explorer.js')
+    script(src='/javascripts/bootstrap-treeview.min.js')
   - else
     div.markdown
       textarea(id='md-textarea')

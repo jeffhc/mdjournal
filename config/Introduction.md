@@ -13,7 +13,7 @@ MD Journal uses the Markdown language for writing into documents, which is extre
 - Create and edit Markdown/text files, which are automatically saved to the cloud.
 - Organize files into folders.
 - Auto-save functionality: every edit you make is saved into the cloud, kinda like Google Docs.
-
+- Selection 
 
 ### Features to be implemented
 - Delete files and folders. 
@@ -23,7 +23,6 @@ MD Journal uses the Markdown language for writing into documents, which is extre
 
 - upload
 - Preview default
-- Selection 
 - Public/private (404) (view only)
 - Shared with others (404)
 - Rename
