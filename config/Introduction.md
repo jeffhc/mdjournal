@@ -14,10 +14,11 @@ MD Journal uses the Markdown language for writing into documents, which is extre
 - Organize files into folders.
 - Auto-save functionality: every edit you make is saved into the cloud, kinda like Google Docs.
 - Selection 
+- Delete files and folders. 
+- Move around files and folders.
 
 ### Features to be implemented
-- Delete files and folders. 
-- Move around files and folders. (Drag and drop functionality.)
+- Drag and drop functionality for moving items.
 - Sorting files and folders by date and name in the explorer.
 - Search functionality.
 
@@ -28,3 +29,4 @@ MD Journal uses the Markdown language for writing into documents, which is extre
 - Rename
 - Copy/paste?
 - Autosave show last refresshed on open
+- Show "Saving..." like in Google Docs.

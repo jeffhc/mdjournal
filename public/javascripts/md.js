@@ -1,6 +1,6 @@
 $(function() {
 
-  let last_saved = new Date();
+  let last_saved = new Date(current.last_updated);
 
   var easyMDE = new EasyMDE({
     element: document.getElementById('md-textarea'),
@@ -9,7 +9,14 @@ $(function() {
     status: [{
       className: "custom_autosaver",
       defaultValue: function(el) {
-        el.innerHTML = "Autosaved: " + last_saved.toLocaleTimeString();
+        let today = new Date();
+        let time_to_show = '';
+        if(today.getDate() === last_saved.getDate() && today.getMonth() === last_saved.getMonth() && today.getFullYear() === last_saved.getFullYear()) {
+          time_to_show = last_saved.toLocaleTimeString();
+        } else {
+          time_to_show = last_saved.toDateString() + ', ' + last_saved.toLocaleTimeString();
+        }
+        el.innerHTML = "Autosaved: " + time_to_show;
       }
     }, "lines", "words", "cursor"]
   });
@@ -21,6 +28,7 @@ $(function() {
 
   var timeoutId;
   easyMDE.codemirror.on("change", function(){  
+    $('.custom_autosaver').html("Saving...");
     // Taken from https://stackoverflow.com/questions/19910843/autosave-input-boxs-to-database-during-pause-in-typing
     clearTimeout(timeoutId);
     timeoutId = setTimeout(function() {
