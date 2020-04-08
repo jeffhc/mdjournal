@@ -19,21 +19,11 @@ $(function() {
       ANY_SELECTED = false;
     }
     if(ANY_SELECTED) {
-      // $('#toolbar_actions').css('visibility', 'visible');
-      // $('#select_action').css('display', 'none');
-      $('#move_action').removeClass('btn-secondary');
-      $('#delete_action').removeClass('btn-secondary');
-      $('#move_action').addClass('btn-primary');
-      $('#delete_action').addClass('btn-primary');
+      $('.toolbar-action').removeClass('btn-secondary');
+      $('.toolbar-action').addClass('btn-primary');
     } else {
-      // $('.explorer-item').off('click');
-      // $('.selected').toggleClass('selected');
-      // $('#toolbar_actions').css('visibility', 'hidden');
-      // $('#select_action').css('display', 'inline');
-      $('#move_action').addClass('btn-secondary');
-      $('#delete_action').addClass('btn-secondary');
-      $('#move_action').removeClass('btn-primary');
-      $('#delete_action').removeClass('btn-primary');
+      $('.toolbar-action').addClass('btn-secondary');
+      $('.toolbar-action').removeClass('btn-primary');
     }
     return ANY_SELECTED;
   }
@@ -58,22 +48,8 @@ $(function() {
     return selected
   }
 
-  // $('#select_action').click(toggleSelectMode);
-  // $('#cancel_action').click(toggleSelectMode);
-
-  $('#select_all_action').click(function() {
-    $('.explorer-item').addClass('selected');
-    checkAllSelected();
-    checkAnySelected();
-  });
-  $('#deselect_all_action').click(function() {
-    $('.selected').removeClass('selected');
-    checkAllSelected();
-    checkAnySelected();
-  });
-
-  // Clicking on body will also deselect all
-  // TO-DO
+  
+  /* Toolbar Actions */
 
   function deleteModal() {
     $('#main-modal-title').html('Delete');
@@ -138,10 +114,9 @@ $(function() {
             });
             
             $('#main-modal-submit').unbind().click(function() { 
-              $('#main-modal').modal('hide');
               if(selected_move_tree_node) {
                 notifyModal(
-                  'Confirm', 'Are you sure you want to move the folder?', true, moveFunction
+                  'Confirm', `<p>Are you sure you want to move item(s) to <span style="font-style: italic">${selected_move_tree_node.text}</span>?</p>`, true, moveFunction
                 )
               } else {
                 notifyModal(
@@ -189,6 +164,56 @@ $(function() {
     $('#notify-modal').modal();
   }
 
+  function renameModal() {
+    $('#main-modal-title').html('Rename');
+    if(checkAnySelected()) {
+      if($('.selected').length === 1) {
+        $('#main-modal-submit').css('display', 'inline');
+        $('#main-modal-submit').html('Rename');
+        $('#main-modal-submit').removeClass('btn-danger');
+        $('#main-modal-submit').addClass('btn-primary');
+        $('#main-modal-body').html(`<form action="/md/${current._id}/rename" method="POST" id="rename_form">
+        <div class="form-group">
+          <input type="text" class="form-control" name="name" placeholder="New name" id="rename_name">
+        </div>
+        </form>`);
+        $('#main-modal-submit').unbind().click(function () {
+          notifyModal(
+            'Confirm', `Are you sure you want to rename <span style="font-style:italic;">${$('.selected .content').text()}</span> to <span style="font-style:italic;">${$('#rename_name').val()}</span>?`, true, renameFunction
+          )
+        });
+      } else {
+        $('#main-modal-body').html('<p>You can only rename one item at a time!</p>');
+        $('#main-modal-submit').css('display', 'none');
+      }
+    } else {
+      $('#main-modal-body').html('<p>You don\'t have any files or folders selected!</p>');
+      $('#main-modal-submit').css('display', 'none');
+    }
+    $("#main-modal").modal()
+  }
+
+  function renameFunction() {
+    $('<input type="hidden" name="item" value="' + $('.selected').attr('data-id') + '">')
+    .appendTo($('#rename_form'));
+    $('#rename_form').submit();
+  }
+
   $('#delete_action').click(deleteModal);
   $('#move_action').click(moveModal);
+  $('#rename_action').click(renameModal);
+
+  $('#select_all_action').click(function() {
+    $('.explorer-item').addClass('selected');
+    checkAllSelected();
+    checkAnySelected();
+  });
+  $('#deselect_all_action').click(function() {
+    $('.selected').removeClass('selected');
+    checkAllSelected();
+    checkAnySelected();
+  });
+
+  // Clicking on body will also deselect all
+  // TO-DO
 });

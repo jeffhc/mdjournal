@@ -16,6 +16,7 @@ MD Journal uses the Markdown language for writing into documents, which is extre
 - Selection 
 - Delete files and folders. 
 - Move around files and folders.
+- Rename files and folders.
 
 ### Features to be implemented
 - Drag and drop functionality for moving items.
@@ -26,7 +27,6 @@ MD Journal uses the Markdown language for writing into documents, which is extre
 - Preview default
 - Public/private (404) (view only)
 - Shared with others (404)
-- Rename
 - Copy/paste?
 - Autosave show last refresshed on open
 - Show "Saving..." like in Google Docs.

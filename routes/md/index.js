@@ -205,6 +205,29 @@ router.post('/:id/move', auth.required, (req, res, next) => {
   }
 });
 
+// POST: Rename markdown file or folder.
+router.post('/:id/rename', auth.required, (req, res, next) => {
+  let item = req.body.item;
+  let name = req.body.name;
+
+  if(item && name && item.match(/^[0-9a-fA-F]{24}$/)) {
+    Leaf.findOne({ _id: ObjectId(item) }, (err, doc) => {
+      if(err || !doc) {
+        console.log(err);
+        req.flash('error', "Unable to rename object!");
+        return res.redirect(`/md/${req.params.id}`);
+      }
+      doc.name = name;
+      doc.save((err, doc) => {
+        req.flash('success', "Successfully renamed!");
+        return res.redirect(`/md/${req.params.id}`);
+      });
+    })
+  } else {
+    req.flash('error', "Unable to rename object!");
+    return res.redirect(`/md/${req.params.id}`);
+  }
+});
 
 
 module.exports = router;

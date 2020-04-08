@@ -16,23 +16,15 @@ block content
           a(href='#') root
   - if(current.type === 'root' || current.type === 'folder')
     .toolbar
-      //- button.btn.btn-primary.btn-sm.mb-3(id='select_action') Select
       .btn-group.btn-group-sm.mb-3(role='group', id='toolbar_actions')
         button.btn.btn-info(id='select_all_action') Select All
         button.btn.btn-info(id='deselect_all_action', style='display:none;') Deselect All
-        button.btn.btn-secondary(id='move_action') Move
-        button.btn.btn-secondary(id='delete_action') Delete
+        button.btn.btn-secondary.toolbar-action(id='move_action') Move
+        button.btn.btn-secondary.toolbar-action(id='rename_action') Rename
+        button.btn.btn-secondary.toolbar-action(id='delete_action') Delete
       form.create-form.form-inline.mb-3(action=`/md/${current._id}/new`, method='POST')
         .input-group.input-group-sm
           input.form-control(type='text', name='name', value='', placeholder='Name')
-          //- .input-group-append
-          //-   .input-group-text
-          //-     input.form-check-input(type="radio", id="markdown", name="type", value="markdown")
-          //-     label.form-check-label(for="markdown") Markdown File
-          //- .input-group-append
-          //-   .input-group-text
-          //-     input.form-check-input(type="radio", id="folder", name="type", value="folder")
-          //-     label.form-check-label(for="folder") Folder
           .input-group-append
             select.custom-select.custom-select-sm(name='type')
               option(value='markdown', selected=true) Markdown File
