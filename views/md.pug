@@ -50,7 +50,19 @@ block content
             p Modal body text goes here.
           .modal-footer
             button.btn.btn-secondary(type='button', data-dismiss='modal') Close
-            button.btn.btn-primary(type='button', id='main-modal-submit') Ok
+            button.btn.btn-primary(type='button', id='main-modal-submit', data-dismiss='modal') Ok
+    .modal(tabindex='-1', role='dialog', id='notify-modal')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            h5.modal-title(id='notify-modal-title') Modal title
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+          .modal-body(id='notify-modal-body')
+            p Modal body text goes here.
+          .modal-footer
+            button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+            button.btn.btn-primary(type='button', id='notify-modal-submit', style="display: none;", data-dismiss='modal') Ok
   - if(current.type === 'root' || current.type === 'folder')
     div.explorer.mb-3
       div.explorer-header

@@ -38,7 +38,7 @@ router.get('/folder_tree', auth.required, (req, res, next) => {
             return [...ancestor_ids, doc._id]
           });
 
-      console.log('paths', pathsArray);
+      // console.log('paths', pathsArray);
 
       // Build tree object from paths array
       let tree = treejs.getParsedTreeFromPaths(pathsArray, pathNameDictionary);
@@ -146,56 +146,65 @@ router.post('/:id/edit', auth.required, (req, res, next) => {
 
 // POST: Delete markdown file or folder.
 router.post('/:id/delete', auth.required, (req, res, next) => {
-  let isRoot = (req.params.id == undefined || req.params.id === 'root');
+  // let isRoot = (req.params.id == undefined || req.params.id === 'root');
+  let selected = req.body.selected.split(',');
 
-  Leaf.findOne({ _id: isRoot ? req.user.rootLeaf : req.params.id }, (err, current_doc) => {
-    if(err || current_doc == undefined) {
-      console.log(err);
-      return next(createError(404, 'Leaf not found!'));
-    }
-
-
-  });
+  if(selected && selected.length && selected.every((current) => current.match(/^[0-9a-fA-F]{24}$/))) {
+    Leaf.deleteMany({_id: { $in: selected.map((id) => ObjectId(id)) }}, (err) => {
+      if(err) {
+        console.log(err);
+        return next(createError(404, 'Leaf not found!'));
+      }
+      req.flash('success', "Successfully deleted!");
+      return res.redirect(`/md/${req.params.id}`);
+    });
+  } else {
+    req.flash('error', "Unable to delete objects!");
+    return res.redirect(`/md/${req.params.id}`);
+  }
 });
 
 // POST: Move markdown file or folder.
 router.post('/:id/move', auth.required, (req, res, next) => {
-  let isRoot = (req.params.id == undefined || req.params.id === 'root');
+  // let isRoot = (req.params.id == undefined || req.params.id === 'root');
+  let selected = req.body.selected.split(',');
+  let location = req.body.location;
 
-  Leaf.findOne({ _id: isRoot ? req.user.rootLeaf : req.params.id }, (err, current_doc) => {
-    if(err || current_doc == undefined) {
-      console.log(err);
-      return next(createError(404, 'Leaf not found!'));
-    }
-
-
-  });
+  if(selected && selected.length && location 
+    && location.match(/^[0-9a-fA-F]{24}$/) && selected.every((current) => current.match(/^[0-9a-fA-F]{24}$/))) {
+    
+    Leaf.find({_id: { $in: selected.map((id) => ObjectId(id)) }}, (err1, docs) => {
+      Leaf.findOne({ _id: ObjectId(location) }, (err2, location_doc) => {
+        if(err1 || err2 || !location_doc || !docs || !docs.length) {
+          console.log(err1, err2);
+          return next(createError(404, 'Leaf not found!'));
+        }
+        let promises = [];
+        docs.forEach(function(doc) {
+          doc.ancestors = [...location_doc.ancestors, { name: location_doc.name, id: location_doc._id }];
+          doc.parent = location_doc._id;
+          doc.last_updated = new Date();
+          promises.push(new Promise((resolve, reject) => {
+            doc.save(function(err, doc) {
+              if(err) { console.log(err); reject(); } else { resolve(); } return;
+            })
+          }));
+        })
+        Promise.all(promises).then((values) => {
+          req.flash('success', "Successfully moved!");
+          return res.redirect(`/md/${req.params.id}`);
+        }).catch((err) => {
+          req.flash('error', "Unable to move objects!");
+          return res.redirect(`/md/${req.params.id}`);
+        })
+      });
+    });
+  } else {
+    req.flash('error', "Unable to move objects!");
+    return res.redirect(`/md/${req.params.id}`);
+  }
 });
 
 
-
-function constructTree(rootId, history, level, max_level, callback) {
-
-  level++;
-  if(level > max_level) {
-    callback(rootId);
-    return;
-  }
-  
-  Leaf.find({ parent: rootId }, function (err, children) {
-    if(err) { return onResult(false); }
-    
-    if(children) {
-      history[rootId] = [];
-      for(var child of children) {
-        if(child.type === 'folder' || child.type === 'root') {
-          constructTree(child._id, level, max_level, callback);
-        } else {
-          callback(child);
-        }
-      }
-    }
-  });
-}
 
 module.exports = router;

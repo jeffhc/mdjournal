@@ -51,9 +51,11 @@ $(function() {
   }
 
   function getSelected() {
+    let selected = [];
     $('.selected').each(function( index, element ){
-      console.log($(element).attr('data-id'));
+      selected.push($(element).attr('data-id'));
     });
+    return selected
   }
 
   // $('#select_action').click(toggleSelectMode);
@@ -76,12 +78,12 @@ $(function() {
   function deleteModal() {
     $('#main-modal-title').html('Delete');
     if(checkAnySelected()) {
-      $('#main-modal-body').html('<p style="font-weight: bold;">Are you sure you want to delete the selected files and folders?</p>');
+      $('#main-modal-body').html('<p style="font-weight: bold;">Are you sure you want to delete the selected files and folders?</p><p style="font-style: italic;">This action cannot be undone.</p>');
       $('#main-modal-submit').css('display', 'inline');
       $('#main-modal-submit').html('Delete');
       $('#main-modal-submit').removeClass('btn-primary');
       $('#main-modal-submit').addClass('btn-danger');
-      $('#main-modal-submit').click(deleteFunction);
+      $('#main-modal-submit').unbind().click(deleteFunction);
     } else {
       $('#main-modal-body').html('<p>You don\'t have any files or folders selected!</p>');
       $('#main-modal-submit').css('display', 'none');
@@ -90,8 +92,14 @@ $(function() {
   }
 
   function deleteFunction() {
-
+    console.log('deleted!')
+    let selected_ids = getSelected();
+    $(`<form action="/md/${current._id}/delete" method="POST">` + 
+      '<input type="hidden" name="selected" value="' + selected_ids.toString() + '">' +
+      '</form>').appendTo($(document.body)).submit();
   }
+
+  let selected_move_tree_node = null;
 
   function moveModal() {
     $('#main-modal-title').html('Move');
@@ -100,14 +108,13 @@ $(function() {
       $('#main-modal-submit').html('Move');
       $('#main-modal-submit').removeClass('btn-danger');
       $('#main-modal-submit').addClass('btn-primary');
-      $('#main-modal-submit').click(moveFunction);
       $.ajax({
         type: "GET",
         url: `/md/folder_tree`,
         success: function(data) {
           if (data && !data.error) {
             $('#main-modal-body').html('<p>Where do you want to move the selected files and folders?</p><div id="tree"></div>');
-            console.log(data);
+            // console.log(data);
             $('#tree').treeview({
               color: "#428bca",
               expandIcon: "fa fa-plus",
@@ -123,6 +130,25 @@ $(function() {
               $('.badge').each(function() { $(this).addClass('badge-secondary') });
               $('.badge.badge-secondary').css('float', 'right');
             });
+            $('#tree').on('nodeSelected', function(event, data) {
+              selected_move_tree_node = data;
+            });
+            $('#tree').on('nodeUnselected', function(event, data) {
+              selected_move_tree_node = null;
+            });
+            
+            $('#main-modal-submit').unbind().click(function() { 
+              $('#main-modal').modal('hide');
+              if(selected_move_tree_node) {
+                notifyModal(
+                  'Confirm', 'Are you sure you want to move the folder?', true, moveFunction
+                )
+              } else {
+                notifyModal(
+                  'Error', 'You didn\'t select a folder!', true, moveModal
+                )
+              }
+            });
           } else {
             $('#main-modal-body').html('<p>Error loading folder tree!</p>');
           }
@@ -136,7 +162,31 @@ $(function() {
   }
 
   function moveFunction() {
-    
+    if(selected_move_tree_node) {
+      console.log('moved!');
+      let selected_ids = getSelected();
+      $(`<form action="/md/${current._id}/move" method="POST">` + 
+        '<input type="hidden" name="selected" value="' + selected_ids.toString() + '">' +
+        '<input type="hidden" name="location" value="' + selected_move_tree_node.id + '">' +
+        '</form>').appendTo($(document.body)).submit();
+      selected_move_tree_node = null;
+    } else {
+      notifyModal(
+        'Error', 'You didn\'t select a folder!', true, moveModal
+      )
+    }
+  }
+
+  function notifyModal(title, body, submitActivate, submitFunction) {
+    $('#notify-modal-title').html(title);
+    $('#notify-modal-body').html(body);
+    if(submitActivate) {
+      $('#notify-modal-submit').unbind().click(submitFunction);
+      $('#notify-modal-submit').css('display', 'inline');
+    } else {
+      $('#notify-modal-submit').css('display', 'none');
+    }
+    $('#notify-modal').modal();
   }
 
   $('#delete_action').click(deleteModal);

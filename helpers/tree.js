@@ -64,7 +64,6 @@ let parseForBootStrapTreeView = function(treeObj, pathNameDictionary) {
     color: "#000000",
     backColor: "#FFFFFF",
     tags_count: treeObj['count'],
-    href: treeObj['name'],
   }
   if(treeObj['children'] && treeObj['children'].length) {
     result_obj['nodes'] = [];
