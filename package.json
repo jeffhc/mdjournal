@@ -1,10 +1,10 @@
 {
-  "name": "epsas",
+  "name": "MDJournal",
   "version": "1.0.0",
-  "description": "Express Passport Session Authentication Skeleton",
+  "description": "A simple, fast, cloud-based note taking web app",
   "scripts": {
     "start": "ENV=development node ./bin/www",
-    "production": "ENV=PRODUCTION node ./bin/www"
+    "production": "ENV=production PORT=3030 node ./bin/www"
   },
   "author": "Jeffrey",
   "license": "ISC",
