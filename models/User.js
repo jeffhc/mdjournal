@@ -17,6 +17,8 @@ const UserSchema = new Schema({
 
   rootLeaf: ObjectId,
 
+  darkMode: { type: Boolean, default: false },
+  previewDefault: { type: Boolean, default: false },
 });
 
 /* 

@@ -96,6 +96,9 @@ router.post('/create', auth.admin, (req, res, next) => {
   });
 });
 
+// account paths
+router.use('/account', require('./account'));
+
 // GET current route (required, only authenticated users have access)
 router.get('/current', auth.required, (req, res, next) => {
   const { payload: { id } } = req;

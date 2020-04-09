@@ -8,7 +8,8 @@ html
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/easymde.min.css')
-    //- link(rel='stylesheet', href='/stylesheets/simplemde.min.css')
+    - if(user && user.darkMode)
+      link(rel='stylesheet', href='/stylesheets/custom-dark.css')
     link(rel='stylesheet', href='/stylesheets/font-awesome-4.7.0/css/font-awesome.min.css')
   
   body
@@ -43,6 +44,9 @@ html
             a.nav-link(href='/user/logout', tabindex='-1', aria-disabled='true') Logout
           else
             a.nav-link(href='/user/login', tabindex='-1', aria-disabled='true') Login
+        - if(user)
+          .nav-item
+            a.nav-link(href='/user/account', tabindex='-1', aria-disabled='true') Account
         - if(user && user.roleId === 1)
           .nav-item
             a.nav-link(href='/user/create') Create user

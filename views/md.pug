@@ -5,6 +5,7 @@ block content
   link(rel='stylesheet', href='/stylesheets/bootstrap-treeview.min.css')
   script(type='text/javascript').
       const current = !{JSON.stringify(current)};
+      const user = !{JSON.stringify(user)};
   nav
     ol.breadcrumb
       - if(ancestors && ancestors.length)

@@ -19,15 +19,22 @@ MD Journal uses the Markdown language for writing into documents, which is extre
 - Delete files and folders. 
 - Move around files and folders.
 - Rename files and folders.
+- VSCode theme (dark mode)
+- scroll bug (very hacky fix)
+- Preview mode default
 
 ### Features to be implemented
 - Drag and drop functionality for moving items.
 - Sorting files and folders by date and name in the explorer.
 - Search functionality.
-- Preview default
 - Public/private (404) (view only)
 - Shared with others (404)
 - Copy/paste?
+- When no items in folder, say "No items"
+- Account options
+  - spellcheck
+  - adjustable margins
+  - change password
+- Cloud sync
 
 - upload
-- VSCode theme

@@ -18,7 +18,8 @@ $(function() {
         }
         el.innerHTML = "Autosaved: " + time_to_show;
       }
-    }, "lines", "words", "cursor"]
+    }, "lines", "words", "cursor"],
+    theme: 'custom-dark',
   });
 
   if(current['content'] && current['content'].length) {
@@ -53,4 +54,23 @@ $(function() {
     });
   }
   
+  // For the preview mode, no scroll.
+  $('button.preview').click(function() {
+    $(function() {
+      if(easyMDE.isPreviewActive()) {
+        $('.CodeMirror')[0].style.height = $('.editor-preview-full')[0].scrollHeight.toString() + 'px';
+        $('.editor-preview-full').css('overflow', 'hidden');
+      } else {
+        $('.CodeMirror')[0].style.height = 'auto';
+      }
+    })
+  });
+
+  if(user && user.previewDefault) {
+    easyMDE.togglePreview();
+    $(function() {
+      $('.CodeMirror')[0].style.height = $('.editor-preview-full')[0].scrollHeight.toString() + 'px';
+      $('.editor-preview-full').css('overflow', 'hidden');
+    })
+  }
 });

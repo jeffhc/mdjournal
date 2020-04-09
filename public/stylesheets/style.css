@@ -12,11 +12,16 @@ a {
 }
 
 #content {
-  padding: 50px;
+  padding: 50px 20% 50px 20%;
 }
 
 .hidden{
   display:none;   
+}
+
+/* There's a weird bug where li's in ul's have bottom margin. */
+.editor-preview li p {
+  margin: 0 0 0 0;
 }
 
 .fade-in {

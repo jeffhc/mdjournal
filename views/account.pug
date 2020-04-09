@@ -1,0 +1,46 @@
+extends layout
+
+block content
+  - var darkMode = user ? user.darkMode : false;
+  - var previewDefault = user ? user.previewDefault : false;
+  style.
+    .custom-switch {
+      display: flex;
+      flex-direction: row;
+      align-content: center;
+    }
+  .row
+    .col-md-6
+      h1.mb-5 My Account
+
+      form.mb-5(method='POST' action='/user/account')
+        div.form-group
+          //- label(for='username') Username:
+          input#username.form-control(type='text', placeholder='New Password' name='password')
+        div.form-group
+          //- label(for='password') Confirm Password:
+          input#password.form-control(type='password' placeholder='Confirm Password' name='cpassword')
+        //- button.btn.btn-primary(type='submit') Change Password
+      form#darkModeForm.mb-3(method='POST', action='/user/account/darkmode')
+        div.custom-control.custom-switch
+          input.custom-control-input#customSwitch(type='checkbox', name='darkMode', checked=darkMode)
+          label.custom-control-label(for='customSwitch') Dark Mode
+      form#previewDefaultForm.mb-3(method='POST', action='/user/account/previewDefault')
+        div.custom-control.custom-switch
+          input.custom-control-input#customSwitch2(type='checkbox', name='previewDefault', checked=previewDefault)
+          label.custom-control-label(for='customSwitch2') Preview Mode as Default
+
+  script(type='text/javascript').
+    $(function() {
+      $('#customSwitch').on('change', function() {
+        setInterval(function() {
+          $('#darkModeForm').submit();
+        }, 500);
+      })
+      $('#customSwitch2').on('change', function() {
+        setInterval(function() {
+          $('#previewDefaultForm').submit();
+        }, 500);
+      })
+    })
+          
