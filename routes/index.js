@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
     content = 'Welcome home, ' + req.user.username + '!'
   }
   res.render('index', { 
-    title: 'Markdown Journal v.1',
+    title: 'Markdown Journal v.1.4',
     content,
     introduction
   });
