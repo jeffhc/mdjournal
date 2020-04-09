@@ -20,6 +20,7 @@ $(function() {
       }
     }, "lines", "words", "cursor"],
     theme: 'custom-dark',
+    spellChecker: false,
   });
 
   if(current['content'] && current['content'].length) {
