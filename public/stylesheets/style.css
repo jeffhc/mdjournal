@@ -7,9 +7,9 @@ body {
   flex-direction: row-reverse;
 }
 
-a {
-  /* color: #00B7FF; */
-}
+/* a {
+  color: #00B7FF;
+} */
 
 #content {
   padding: 50px 20% 50px 20%;
@@ -22,6 +22,14 @@ a {
 /* There's a weird bug where li's in ul's have bottom margin. */
 .editor-preview li p {
   margin: 0 0 0 0;
+}
+
+blockquote {
+  margin: 16px 0;
+  font-size: inherit;
+  padding: 0 15px;
+  color: #5c5c5c;
+  border-left: 4px solid #d6d6d6
 }
 
 .fade-in {
