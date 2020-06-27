@@ -46,6 +46,13 @@ body {
   overflow: auto;
 }
 
+.modal-content {
+  background: var(--bg_lighter_gray);
+}
+.modal-header, .modal-footer {
+  border: 0;
+}
+
 .CodeMirror {
   height: auto;
   display: block;
